@@ -1,0 +1,63 @@
+- name: Configure debian.sources
+  ansible.builtin.template:
+    src: 'debian.sources.j2'
+    dest: '/etc/apt/sources.list.d/debian.sources'
+    mode: '644'
+
+- name: Upgrade the OS
+  ansible.builtin.apt:
+    upgrade: 'full'
+    autoclean: true
+    autoremove: true
+    update_cache: true
+
+- name: Install packages
+  ansible.builtin.apt:
+    name:
+      [
+        'bash-completion',
+        'git', # For versioning of /etc
+        'man',
+        'needrestart', # To report if restart is needed after unattended-upgrade
+        'nftables', # Minimal firewall
+        'unattended-upgrades' # To keep the system updated
+      ]
+    state: 'present'
+    update_cache: true
+
+- name: Custom configuration for frequency of unattended-upgrades execution (avoid duplicate settings)
+  ansible.builtin.copy:
+    src: '10periodic'
+    dest: '/etc/apt/apt.conf.d/10periodic'
+    mode: '644'
+  notify:
+    - Reload unattended-upgrades
+
+- name: Enable nftables service
+  ansible.builtin.systemd_service:
+    name: 'nftables'
+    enabled: true
+
+- name: Configure nftables
+  ansible.builtin.copy:
+    src: 'nftables.conf'
+    dest: '/etc/nftables.conf'
+    mode: '644'
+  notify:
+    - Reload 'nftables'
+
+- name: Copy git ignore
+  ansible.builtin.copy:
+    src: 'files/git_ignore'
+    dest: '/etc/.gitignore'
+    mode: '644'
+
+- name: Init git repo in etc folder
+  ansible.builtin.command:
+    cmd: '{{ item }}'
+    chdir: '/etc/'
+  changed_when: true
+  with_items:
+    - 'git init'
+    - 'git add .'
+    - 'git -c user.name="Debian Ansible" -c user.email="debian@localhost" commit -m "initial commit"'

@@ -1,0 +1,13 @@
+# Generic caches and temporary files
+*.cache
+*.dpkg-*
+*.fuselock
+*.lock
+*.old
+cache
+
+# Editor temp files
+*~
+\#*\#
+
+/mtab

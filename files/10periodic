@@ -1,0 +1,4 @@
+# See explanation of why set to "always" instead of default "1" here: https://unix.stackexchange.com/questions/342663/how-is-unattended-upgrades-started-and-how-can-i-modify-its-schedule/541431#541431
+APT::Periodic::Update-Package-Lists "always";
+APT::Periodic::Unattended-Upgrade "always";
+APT::Periodic::AutocleanInterval "21";

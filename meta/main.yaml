@@ -1,0 +1,26 @@
+argument_specs:
+  main:
+    short_description: 'Minimal Debian server setup'
+    description:
+      - 'Setup a minimal Debian server with unattended-upgrade, nftables firewall and versionning of `/etc` using Git.'
+    author:
+      - 'Antoine Mottier'
+    options:
+      debian_distribution_codename:
+        type: 'str'
+        required: false
+        default: 'trixie'
+        description: 'The codename of Debian distribution to setup'
+
+galaxy_info:
+  role_name: 'debian_minimal'
+  namespace: 'amottier'
+  min_ansible_version: '2.20'
+  author: 'Antoine Mottier'
+  description: 'Setup a minimal Debian server with unattended-upgrade, nftables firewall and versionning of `/etc` using Git.'
+  license: 'Apache-2.0'
+  platforms:
+  - name: Debian
+    versions:
+      - trixie
+dependencies: []
