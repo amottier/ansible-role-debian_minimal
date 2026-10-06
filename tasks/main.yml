@@ -44,7 +44,7 @@
     dest: '/etc/nftables.conf'
     mode: '644'
   notify:
-    - Reload 'nftables'
+    - 'Reload nftables'
 
 - name: Copy git ignore
   ansible.builtin.copy:

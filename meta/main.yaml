@@ -20,7 +20,7 @@ galaxy_info:
   description: 'Setup a minimal Debian server with unattended-upgrade, nftables firewall and versionning of `/etc` using Git.'
   license: 'Apache-2.0'
   platforms:
-  - name: Debian
-    versions:
-      - trixie
+    - name: Debian
+      versions:
+        - trixie
 dependencies: []
